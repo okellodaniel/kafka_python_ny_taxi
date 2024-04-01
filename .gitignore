@@ -1,1 +1,2 @@
 resources/rides*
+docker/kafka/venv/*
