@@ -25,7 +25,7 @@ class JsonProducer(KafkaProducer):
     def publish_rides(self, topic: str, messages: List[Ride]):
         for ride in messages:
             try:
-                record = self.producer.send(topic=topic, key=ride.pu_location_id, value=ride)
+                record = self.producer.send(topic=topic, key=str(ride.pu_location_id).encode('utf-8'), value=ride)
                 print('Record {} successfully produced at offset {}'.format(ride.pu_location_id, record.get().offset))
             except KafkaTimeoutError as e:
                 print(e.__str__())
@@ -35,7 +35,7 @@ if __name__ == '__main__':
     # Config Should match with the KafkaProducer expectation
     config = {
         'bootstrap_servers': BOOTSTRAP_SERVERS,
-        'key_serializer': lambda key: str(key).encode(),
+        
         'value_serializer': lambda x: json.dumps(x.__dict__, default=str).encode('utf-8')
     }
     producer = JsonProducer(props=config)

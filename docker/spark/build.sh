@@ -14,7 +14,7 @@ docker build \
   --build-arg spark_version="${SPARK_VERSION}" \
   --build-arg hadoop_version="${HADOOP_VERSION}" \
   -f spark-base.Dockerfile \
-  -t spark-base .
+  -t spark-base . \
 
 docker build \
   -f spark-master.Dockerfile \
